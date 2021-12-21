@@ -1,13 +1,12 @@
 import React from 'react'
 import Login from 'containers/Login'
-import { types, useInjection } from 'ioc'
-import AuthStore from 'stores/AuthStore'
 import { Button, Container, Grid, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
+import rootStore from 'stores'
 
 const LoginPage = observer(() => {
-  const authStore = useInjection<AuthStore>(types.AuthStore)
+  const { authStore } = rootStore
   const navigate = useNavigate()
 
   return (

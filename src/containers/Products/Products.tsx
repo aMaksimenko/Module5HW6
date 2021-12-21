@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
-import { types, useInjection } from 'ioc'
+import React, { useEffect, useMemo } from 'react'
 import ProductsStore from './Products.store'
 import { observer } from 'mobx-react-lite'
 import ProductCard from './components/ProductCard'
 import { Box, Container, Grid, Pagination } from '@mui/material'
 
 const Products = observer(() => {
-  const store = useInjection<ProductsStore>(types.ProductsStore)
+  const store = useMemo(() => new ProductsStore(), [])
 
   useEffect(() => {
     store.getProductsAsync()

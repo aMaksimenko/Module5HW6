@@ -1,5 +1,3 @@
-import { injectable } from 'inversify'
-
 type sendAsyncProps = {
   query: string
 }
@@ -8,8 +6,9 @@ export interface IContentfulService {
   sendAsync: ({ query }: sendAsyncProps) => Promise<any>
 }
 
-@injectable()
 export default class ContentfulService implements IContentfulService {
+  private readonly token = process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN
+  private readonly spaceId = process.env.REACT_APP_CONTENTFUL_SPACE_ID
   private readonly baseUrl = process.env.REACT_APP_CONTENTFUL_BASE_URL
 
   private readonly handleResponse = (response: Response) => {
@@ -25,11 +24,11 @@ export default class ContentfulService implements IContentfulService {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN}`
+        Authorization: `Bearer ${this.token}`
       },
       body: JSON.stringify({ query })
     }
-    return await fetch(`${this.baseUrl}${process.env.REACT_APP_CONTENTFUL_SPACE_ID}`, requestOptions).then(this.handleResponse)
+    return await fetch(`${this.baseUrl}${this.spaceId}`, requestOptions).then(this.handleResponse)
   }
 }
 

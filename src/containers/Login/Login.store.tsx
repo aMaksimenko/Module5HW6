@@ -1,19 +1,12 @@
-import { inject, injectable } from 'inversify'
 import { makeAutoObservable } from 'mobx'
 import { ChangeEvent, FormEvent } from 'react'
-import { types } from 'ioc'
 import { IAuthService } from 'services/AuthService'
-import AuthStore from 'stores/AuthStore'
-import CartStore from 'stores/CartStore'
+import rootStore, { AuthStore, CartStore } from 'stores'
 
-@injectable()
 export default class LoginStore {
-  @inject(types.IAuthService)
-  private readonly _authService!: IAuthService
-  @inject(types.AuthStore)
-  private readonly _authStore!: AuthStore
-  @inject(types.CartStore)
-  private readonly _cartStore!: CartStore
+  private readonly _authService: IAuthService = rootStore.authService
+  private readonly _authStore: AuthStore = rootStore.authStore
+  private readonly _cartStore: CartStore = rootStore.cartStore
   public state: { [key: string]: string } = { email: '', password: '' }
 
   constructor() {

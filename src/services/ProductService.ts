@@ -1,6 +1,3 @@
-import { inject, injectable } from 'inversify'
-import 'reflect-metadata'
-import { types } from 'ioc'
 import { IContentfulService } from 'services/ContentfulService'
 import { getProductById, getProducts, getProductsByIds } from 'queries/products'
 
@@ -15,10 +12,12 @@ export interface IProductService {
   getItemsByIds: (ids: string[]) => Promise<any>
 }
 
-@injectable()
 export default class ProductService implements IProductService {
-  @inject(types.IContentfulService)
   private readonly _contentfulService!: IContentfulService
+
+  constructor(contentfulService: IContentfulService) {
+    this._contentfulService = contentfulService
+  }
 
   public readonly getItemsByPage = ({ page, itemsPerPage }: getItemsByPageProps) => this._contentfulService.sendAsync({
     query: getProducts({ page, itemsPerPage })

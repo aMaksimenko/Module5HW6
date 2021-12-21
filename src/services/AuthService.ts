@@ -1,6 +1,3 @@
-import { inject, injectable } from 'inversify'
-import 'reflect-metadata'
-import { types } from 'ioc'
 import { IContentfulService } from 'services/ContentfulService'
 import { getUserById, login } from 'queries/auth'
 
@@ -14,10 +11,12 @@ export interface IAuthService {
   getUserById: (id: string) => Promise<any>
 }
 
-@injectable()
 export default class AuthService implements IAuthService {
-  @inject(types.IContentfulService)
   private readonly _contentfulService!: IContentfulService
+
+  constructor(contentfulService: IContentfulService) {
+    this._contentfulService = contentfulService
+  }
 
   public readonly login = ({ email, password }: getItemsByPageProps) => this._contentfulService.sendAsync({
     query: login({ email, password })

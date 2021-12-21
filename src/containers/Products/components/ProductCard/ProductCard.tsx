@@ -6,14 +6,13 @@ import { Button, CardActionArea, CardActions } from '@mui/material'
 import { Product as ProductType } from 'models/Product'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import { useNavigate } from 'react-router-dom'
-import { types, useInjection } from 'ioc'
-import CartStore from 'stores/CartStore'
 import { observer } from 'mobx-react-lite'
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline'
+import rootStore from 'stores'
 
 const ProductCard: FC<ProductCardProps> = observer(({ cover, sys }) => {
   const navigate = useNavigate()
-  const cartStore = useInjection<CartStore>(types.CartStore)
+  const { cartStore } = rootStore
   const isAdded = cartStore.orderIds.has(sys.id)
 
   return (

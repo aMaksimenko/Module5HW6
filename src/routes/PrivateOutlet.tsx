@@ -1,11 +1,10 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { types, useInjection } from 'ioc'
-import AuthStore from 'stores/AuthStore'
 import { observer } from 'mobx-react-lite'
+import rootStore from 'stores'
 
 const PrivateOutlet = observer(() => {
-  const authStore = useInjection<AuthStore>(types.AuthStore)
+  const { authStore } = rootStore
 
   return !!authStore.user ? <Outlet /> : <Navigate to="/login" />
 })

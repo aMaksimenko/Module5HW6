@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { types, useInjection } from 'ioc'
 import ProductStore from './Product.store'
 import { observer } from 'mobx-react-lite'
 import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material'
 import GenreList from 'components/GenreList'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import CartStore from 'stores/CartStore'
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline'
+import rootStore from 'stores'
 
 const Product = observer(() => {
   const params = useParams()
-  const store = useInjection<ProductStore>(types.ProductStore)
-  const cartStore = useInjection<CartStore>(types.CartStore)
+  const store = useMemo(() => new ProductStore(), [])
+  const { cartStore } = rootStore
 
   useEffect(() => {
     if (params.id) {

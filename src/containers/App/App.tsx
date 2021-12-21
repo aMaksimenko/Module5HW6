@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import AppRoutes from 'routes/App'
-import { types, useInjection } from 'ioc'
-import AuthStore from 'stores/AuthStore'
-import CartStore from 'stores/CartStore'
+import rootStore from 'stores'
+import { observer } from 'mobx-react-lite'
 
-const App = () => {
-  const authStore = useInjection<AuthStore>(types.AuthStore)
-  const cartStore = useInjection<CartStore>(types.CartStore)
+const App = observer(() => {
+  const { authStore, cartStore } = rootStore
 
   useEffect(() => {
     const initApp = async () => {
@@ -21,6 +19,6 @@ const App = () => {
       <AppRoutes />
     </>
   )
-}
+})
 
 export default App

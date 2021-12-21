@@ -1,18 +1,15 @@
 import { makeAutoObservable } from 'mobx'
-import { inject, injectable } from 'inversify'
-import { types } from 'ioc'
 import AuthStore from 'stores/AuthStore'
 import history from 'routes/history'
 
-@injectable()
 export default class CartStore {
-  @inject(types.AuthStore)
-  private readonly _authStore!: AuthStore
+  private readonly _authStore: AuthStore
   private readonly _storageField: string = 'orders'
   public orderIds: Set<string> = new Set([])
 
-  constructor() {
+  constructor(authStore: AuthStore) {
     makeAutoObservable(this)
+    this._authStore = authStore
   }
 
   private readonly getParsedStorage = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import {
   Avatar,
   Container,
@@ -11,21 +11,20 @@ import {
   ListItemText,
   Paper
 } from '@mui/material'
-import { types, useInjection } from 'ioc'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 import OrderStore from './Order.store'
 
 const Order = observer(() => {
-  const orderStore = useInjection<OrderStore>(types.OrderStore)
+  const store = useMemo(() => new OrderStore(), [])
   const navigate = useNavigate()
 
   useEffect(() => {
-    orderStore.fetchOrder()
-  }, [orderStore])
+    store.fetchOrder()
+  }, [store])
 
-  if (!orderStore.products.length) {
+  if (!store.products.length) {
     return null
   }
 
@@ -35,11 +34,11 @@ const Order = observer(() => {
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Paper>
             <List>
-              {orderStore.products?.map((item) => (
+              {store.products?.map((item) => (
                   <ListItem
                     key={item.sys.id}
                     secondaryAction={
-                      <IconButton edge="end" onClick={() => orderStore.removeItem(item.sys.id)}>
+                      <IconButton edge="end" onClick={() => store.removeItem(item.sys.id)}>
                         <DeleteIcon />
                       </IconButton>
                     }

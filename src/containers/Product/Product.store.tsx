@@ -1,13 +1,10 @@
-import { inject, injectable } from 'inversify'
 import { makeAutoObservable } from 'mobx'
-import { types } from 'ioc'
 import { IProductService } from 'services/ProductService'
 import { Product } from 'models/Product'
+import rootStore from 'stores'
 
-@injectable()
 export default class ProductsStore {
-  @inject(types.IProductService)
-  private readonly _productService!: IProductService
+  private readonly _productService: IProductService = rootStore.productService
   public product: Product | null = null
 
   constructor() {

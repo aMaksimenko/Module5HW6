@@ -1,16 +1,12 @@
 import { makeAutoObservable } from 'mobx'
-import { inject, injectable } from 'inversify'
-import { types } from 'ioc'
 import { IProductService } from 'services/ProductService'
 import CartStore from 'stores/CartStore'
 import { Product } from 'models/Product'
+import rootStore from 'stores'
 
-@injectable()
 export default class OrderStore {
-  @inject(types.CartStore)
-  private readonly _cartStore!: CartStore
-  @inject(types.IProductService)
-  private readonly _productService!: IProductService
+  private readonly _cartStore: CartStore = rootStore.cartStore
+  private readonly _productService: IProductService = rootStore.productService
   public products: Product[] = []
 
   constructor() {

@@ -19,10 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src",
-    "types": ["reflect-metadata"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "baseUrl": "src"
   },
   "include": [
     "src"

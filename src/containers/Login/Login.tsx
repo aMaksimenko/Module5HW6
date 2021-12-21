@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material'
-import { types, useInjection } from 'ioc'
 import LoginStore from './Login.store'
 import { observer } from 'mobx-react-lite'
 import * as mocked from 'tests/mocked/users'
 
 const Login = observer(() => {
-  const store = useInjection<LoginStore>(types.LoginStore)
+  const store = useMemo(() => new LoginStore(), [])
 
   return (
     <Grid container justifyContent="center">

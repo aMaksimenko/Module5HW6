@@ -64,6 +64,3 @@ export const getProductsByIds = (ids: string) => `
   }
 }
 `
-
-// 3bmTVWRwywlxPGwT1lSTFz
-// 5xtkw88jLyan84AOVrK6CZ

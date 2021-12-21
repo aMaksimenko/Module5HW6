@@ -1,18 +1,15 @@
-import { inject, injectable } from 'inversify'
 import { makeAutoObservable } from 'mobx'
 import { User } from 'models/User'
 import { IAuthService } from 'services/AuthService'
-import { types } from 'ioc'
 
-@injectable()
 export default class AuthStore {
-  @inject(types.IAuthService)
-  private readonly _authService!: IAuthService
-  private readonly _storageField: string = "user_id"
+  private readonly _authService: IAuthService
+  private readonly _storageField: string = 'user_id'
   public user: User | null = null
 
-  constructor() {
+  constructor(authService: IAuthService) {
     makeAutoObservable(this)
+    this._authService = authService
   }
 
   public readonly getUserById = async () => {

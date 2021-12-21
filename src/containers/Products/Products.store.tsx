@@ -1,17 +1,14 @@
-import { injectable, inject } from 'inversify'
 import { makeAutoObservable } from 'mobx'
-import { types } from 'ioc'
 import { IProductService } from 'services/ProductService'
 import React from 'react'
+import rootStore from 'stores'
 
-@injectable()
 export default class ProductsStore {
-  @inject(types.IProductService)
-  private readonly _productService!: IProductService
+  private readonly _productService: IProductService = rootStore.productService
   private readonly itemsPerPage: number = 6
   public products: any[] = []
   public page: number = 1
-  public pageCount: number  = 0
+  public pageCount: number = 0
 
   constructor() {
     makeAutoObservable(this)
